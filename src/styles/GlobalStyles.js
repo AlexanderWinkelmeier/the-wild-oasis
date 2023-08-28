@@ -57,7 +57,7 @@ const GlobalStyles = createGlobalStyle`
   --image-opacity: 100%;
 }
 
-/* Resets */
+/* Resets  */
 *,
 *::before,
 *::after {
