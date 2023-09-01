@@ -1,3 +1,5 @@
+// Erstellung eines Supabase Client
+
 import { createClient } from '@supabase/supabase-js';
 
 const supabaseUrl = 'https://npkbzmbbycmbbavnpptp.supabase.co';

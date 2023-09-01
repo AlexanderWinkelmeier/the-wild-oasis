@@ -12,16 +12,19 @@ import PageNotFound from './pages/PageNotFound';
 import AppLayout from './ui/AppLayout';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
+// Erstellung eines QueryClient
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60 * 1000,
+      // staleTime: 60 * 1000,
+      staleTime: 0,
     },
   },
 });
 
 function App() {
   return (
+    // Wrapping der App mit dem QueryClientProvider
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
       <GlobalStyles />
