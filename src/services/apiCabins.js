@@ -17,12 +17,13 @@ export async function createCabin(newCabin) {
     ''
   );
   // https://npkbzmbbycmbbavnpptp.supabase.co/storage/v1/object/public/cabin-images/cabin-001.jpg
+  // das ist der imagePath, d.h. der Pfad zum Bucket, wo das Image gespeichert ist
 
   const imagePath = hasImagePath
     ? newCabin.image
     : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
-  // 1. Create Cabin
+  // 1. Create Cabin --> Erstellung einer Cabin in der Datenbank der Tabelle ("cabins") mit dem Pfad (URL --> imagePath) des Bildes
   const { data, error } = await supabase
     .from('cabins')
     .insert([{ ...newCabin, image: imagePath }])
@@ -31,7 +32,7 @@ export async function createCabin(newCabin) {
     console.error(error);
     throw new Error('Cabin could not be created');
   }
-  // 2. Upload Image
+  // 2. Upload Image --> Hochladen des Bildes selbst in den Bucket ("cabin-images")
   const { error: storageError } = await supabase.storage
     .from('cabin-images')
     .upload(imageName, newCabin.image);
