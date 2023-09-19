@@ -43,6 +43,7 @@ function Filter(filterField, options) {
     searchParams.set(filterField, value);
     setSearchParams(searchParams);
     // ergibt z.B. ".../cabins/discount=no-discount" in der URL, wenn der Filter-Button mit No discount gedrückt wird
+    // filterField ist hier dann discount und value ist dann no-discount
   }
   return (
     <StyledFilter>
@@ -51,6 +52,7 @@ function Filter(filterField, options) {
           key={option.value}
           onClick={() => handleClick(option.value)}
           active={option.value === currentFilter}
+          disabled={option.value === currentFilter}
         >
           {option.lable}
         </FilterButton>
