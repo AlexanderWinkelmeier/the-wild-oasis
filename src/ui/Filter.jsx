@@ -35,16 +35,17 @@ const FilterButton = styled.button`
   }
 `;
 
-function Filter(filterField, options) {
+function Filter({ filterField, options }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = searchParams.get(filterField) || options.at(0).value;
 
   function handleClick(value) {
     searchParams.set(filterField, value);
+    if (searchParams.get('page')) searchParams.set('page', 1);
+
     setSearchParams(searchParams);
-    // ergibt z.B. ".../cabins/discount=no-discount" in der URL, wenn der Filter-Button mit No discount gedrückt wird
-    // filterField ist hier dann discount und value ist dann no-discount
   }
+
   return (
     <StyledFilter>
       {options.map((option) => (
@@ -54,7 +55,7 @@ function Filter(filterField, options) {
           active={option.value === currentFilter}
           disabled={option.value === currentFilter}
         >
-          {option.lable}
+          {option.label}
         </FilterButton>
       ))}
     </StyledFilter>
