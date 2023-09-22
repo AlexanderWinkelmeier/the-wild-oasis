@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 export function useFetchBookings() {
   const [searchParams] = useSearchParams();
 
-  //FILTER
+  // FILTER
 
   const filterValue = searchParams.get('status');
 
@@ -15,6 +15,14 @@ export function useFetchBookings() {
       : { field: 'status', value: filterValue };
   // { field: 'totalPrice', value: 5000, method: 'gte' };
 
+  // SORT
+
+  const sortByRaw = searchParams.get('sortBy') || 'startDate-desc';
+
+  const [field, direction] = sortByRaw.split('-');
+
+  const sortBy = { field, direction };
+
   const {
     isLoading,
     data: bookings,
@@ -22,8 +30,8 @@ export function useFetchBookings() {
   } = useQuery({
     // Man kann das Array als das Dependency-Array von useQuery betrachten, d.h. wenn sich ein Wert in diesem
     // Array ändert, so wird die Query-Funktion getBookings erneut ausgeführt und die Daten vom Server gefeched
-    queryKey: ['bookings', filter],
-    queryFn: () => getBookings(filter),
+    queryKey: ['bookings', filter, sortBy],
+    queryFn: () => getBookings(filter, sortBy),
   });
   return { isLoading, bookings, error };
 }
