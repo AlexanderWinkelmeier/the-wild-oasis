@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { HiChevronLeft, HiChevronRight } from 'react-icons/hi2';
 import { useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -60,12 +61,17 @@ const PaginationButton = styled.button`
 `;
 
 function Pagination({ count }) {
+  // count ist die Anzahl der Reihen, d.h. Bookings, Cabins etc.
   const [searchParams, setSearchParams] = useSearchParams();
+  // currentPage ist die aktuelle Seite als Anzahl, z.B. 1 --> 1. Seite, 2 --> 2. Seite usw.
   const currentPage = !searchParams.get('page')
     ? 1
     : Number(searchParams.get('page'));
 
   const pageCount = Math.ceil(count / PAGE_SIZE);
+  // PAGE_SIZE ist die Anzahl der Reihen, die je Seite angezeigt werden sollen
+  // pageCount ist die mögliche Anzahl an Seiten, die bei diesem count und dieser PAGE_SIZE erstellt
+  // werden können
 
   function nextPage() {
     const next = currentPage === pageCount ? currentPage : currentPage + 1;
