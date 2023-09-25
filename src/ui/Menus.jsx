@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { createContext, useContext, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { HiEllipsisVertical } from 'react-icons/hi2';
@@ -74,8 +73,11 @@ function Menus({ children }) {
 
   const close = () => setOpenId('');
   const open = setOpenId;
+
   return (
-    <MenusContext.Provider value={(openId, close, open, position, setPosition)}>
+    <MenusContext.Provider
+      value={{ openId, close, open, position, setPosition }}
+    >
       {children}
     </MenusContext.Provider>
   );
@@ -90,6 +92,7 @@ function Toggle({ id }) {
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
     });
+
     openId === '' || openId !== id ? open(id) : close();
   }
 
@@ -102,7 +105,6 @@ function Toggle({ id }) {
 
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
-
   const ref = useOutsideClick(close);
 
   if (openId !== id) return null;
@@ -122,6 +124,7 @@ function Button({ children, icon, onClick }) {
     onClick?.();
     close();
   }
+
   return (
     <li>
       <StyledButton onClick={handleClick}>
