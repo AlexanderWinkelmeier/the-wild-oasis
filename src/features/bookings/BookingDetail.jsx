@@ -82,6 +82,8 @@ function BookingDetail() {
               disabled={isDeleting}
               onConfirm={() =>
                 deleteBooking(bookingId, {
+                  // onSettled, onError, onSuccess kann nicht nur in die mutateFn geschrieben werden,
+                  // sondern auch in die indivuelle Funktion, die die Mutation durchführt
                   onSettled: () => navigate(-1),
                 })
               }
