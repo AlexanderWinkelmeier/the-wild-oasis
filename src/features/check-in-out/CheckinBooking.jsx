@@ -54,68 +54,75 @@ function CheckinBooking() {
     if (!confirmPaid) return;
 
     if (addBreakfast) {
-      CheckinBooking({bookingId, breakfast: {
-        hasBreakfast:true,
-        extraPrice: optionalBreakfastPrice,
-        totalPrice: totalPrice + optionalBreakfastPrice
-      }})
+      CheckinBooking({
+        bookingId,
+        breakfast: {
+          hasBreakfast: true,
+          extraPrice: optionalBreakfastPrice,
+          totalPrice: totalPrice + optionalBreakfastPrice,
+        },
+      });
     } else {
-      checkin({bookingId, breakfast: {}});
+      checkin({ bookingId, breakfast: {} });
     }
-  
 
-  return (
-    <>
-      <Row type="horizontal">
-        <Heading as="h1">Check in booking #{bookingId}</Heading>
-        <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
-      </Row>
+    return (
+      <>
+        <Row type="horizontal">
+          <Heading as="h1">Check in booking #{bookingId}</Heading>
+          <ButtonText onClick={moveBack}>&larr; Back</ButtonText>
+        </Row>
 
-      <BookingDataBox booking={booking} />
+        <BookingDataBox booking={booking} />
 
-      {!hasBreakfast && (
+        {!hasBreakfast && (
+          <Box>
+            <Checkbox
+              checked={addBreakfast}
+              onChange={() => {
+                setAddBreakfast((add) => !add);
+                setConfirmPaid(false);
+              }}
+              id="breakfast"
+            >
+              Want to add breakfast for {formatCurrency(optionalBreakfastPrice)}
+              ?
+            </Checkbox>
+          </Box>
+        )}
+
         <Box>
           <Checkbox
-            checked={addBreakfast}
-            onChange={() => {
-              setAddBreakfast((add) => !add);
-              setConfirmPaid(false);
-            }}
-            id="breakfast"
+            checked={confirmPaid}
+            onChange={() => setConfirmPaid((confirm) => !confirm)}
+            disabled={confirmPaid || isCheckinIn}
+            id="confirm"
           >
-            Want to add breakfast for {formatCurrency(optionalBreakfastPrice)}?
+            I confirm that {guests.fullName} has paid the total amount of
+            {!addBreakfast
+              ? formatCurrency(totalPrice)
+              : `${formatCurrency(
+                  totalPrice + optionalBreakfastPrice
+                )} (${formatCurrency(totalPrice)} + ${formatCurrency(
+                  optionalBreakfastPrice
+                )})`}
           </Checkbox>
         </Box>
-      )}
 
-      <Box>
-        <Checkbox
-          checked={confirmPaid}
-          onChange={() => setConfirmPaid((confirm) => !confirm)}
-          disabled={confirmPaid || isCheckinIn}
-          id="confirm"
-        >
-          I confirm that {guests.fullName} has paid the total amount of
-          {!addBreakfast
-            ? formatCurrency(totalPrice)
-            : `${formatCurrency(
-                totalPrice + optionalBreakfastPrice
-              )} (${formatCurrency(totalPrice)} + ${formatCurrency(
-                optionalBreakfastPrice
-              )})`}
-        </Checkbox>
-      </Box>
-
-      <ButtonGroup>
-        <Button onClick={handleCheckin} disabled={!confirmPaid || isCheckinIn}>
-          Check in booking #{bookingId}
-        </Button>
-        <Button variation="secondary" onClick={moveBack}>
-          Back
-        </Button>
-      </ButtonGroup>
-    </>
-  );
+        <ButtonGroup>
+          <Button
+            onClick={handleCheckin}
+            disabled={!confirmPaid || isCheckinIn}
+          >
+            Check in booking #{bookingId}
+          </Button>
+          <Button variation="secondary" onClick={moveBack}>
+            Back
+          </Button>
+        </ButtonGroup>
+      </>
+    );
+  }
 }
 
 export default CheckinBooking;

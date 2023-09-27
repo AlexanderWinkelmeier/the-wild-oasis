@@ -2,7 +2,7 @@ import Form from '../../ui/Form';
 import FormRow from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import Spinner from '../../ui/Spinner';
-import { useFetchSettings } from './useFetchSettings';
+import { useSettings } from './useSettings';
 import { useUpdateSetting } from './useUpdateSetting';
 
 function UpdateSettingsForm() {
@@ -14,7 +14,7 @@ function UpdateSettingsForm() {
       maxGuestsPerBooking,
       breakfastPrice,
     } = {},
-  } = useFetchSettings();
+  } = useSettings();
   const { isUpdating, updateSetting } = useUpdateSetting();
 
   if (isLoading) return <Spinner />;
