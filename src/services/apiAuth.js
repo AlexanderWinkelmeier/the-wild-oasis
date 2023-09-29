@@ -31,3 +31,22 @@ export async function login({ email, password }) {
 // hierin kann man die user-Daten abrufen
 // bei jedem Request an Supabase wird die session, insbesondere der access-token, mitgeschickt, um Zugriff
 // auf Daten von Supabase zu erlangen
+
+// Bei späterem Zugriff auf die App
+export async function getCurrentUser() {
+  // Überprüfung, ob der local Storage des Browsers eine gültige Session hat
+  const { data: session } = await supabase.auth.getSession();
+
+  if (!session.session) return null;
+
+  // obwohl hier eine Session im local Storage gespeichert ist, ist ein erneuter Abruf des Users vom Server sicherer
+  const { data, error } = await supabase.auth.getUser();
+
+  console.log(data);
+  if (error) throw new Error(error.message);
+
+  return data?.user;
+}
+
+// Es wird die Session des Users mit diversen Daten als Response zurückgegeben
+// hier interessiert aber nur der User selbst und nicht der JWT-Token etc.

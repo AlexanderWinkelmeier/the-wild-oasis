@@ -14,7 +14,17 @@ function LoginForm() {
   function handleSubmit(e) {
     e.preventDefault();
     if (!email || !password) return;
-    login({ email, password });
+    login(
+      { email, password },
+      {
+        // egal, ob die Submission erfolgreich war oder ob ein Fehler geworfen wurde, weil z.B. das
+        // Passwort falsch war, sollen beide Felder geleert werden
+        onSettled: () => {
+          setEmail('');
+          setPassword('');
+        },
+      }
+    );
   }
 
   return (
