@@ -42,7 +42,7 @@ export async function getCurrentUser() {
   // obwohl hier eine Session im local Storage gespeichert ist, ist ein erneuter Abruf des Users vom Server sicherer
   const { data, error } = await supabase.auth.getUser();
 
-  console.log(data);
+  // console.log(data);
   if (error) throw new Error(error.message);
 
   return data?.user;
@@ -50,3 +50,11 @@ export async function getCurrentUser() {
 
 // Es wird die Session des Users mit diversen Daten als Response zurückgegeben
 // hier interessiert aber nur der User selbst und nicht der JWT-Token etc.
+
+export async function logout() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+}

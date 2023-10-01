@@ -12,10 +12,10 @@ export function useLogin() {
       // user ist der return von der mutationFn = loginApi, d.h. die session
       // console.log(user);
 
-      queryClient.setQueriesData(['user'], user);
+      queryClient.setQueryData(['user'], user.user);
       // speichert den user im Cache, was das erneute Fetchen beim Server unnötig macht
 
-      navigate('/dashboard');
+      navigate('/dashboard', { replace: true });
     },
     onError: (err) => {
       console.log('ERROR', err);
