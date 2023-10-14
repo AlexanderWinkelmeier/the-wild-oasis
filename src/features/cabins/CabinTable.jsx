@@ -1,15 +1,13 @@
-/* eslint-disable react/prop-types */
-import { useFetchCabins } from './useFetchCabins.js';
-
-import Spinner from '../../ui/Spinner.jsx';
-import CabinRow from './CabinRow.jsx';
-import Table from '../../ui/Table.jsx';
-import Menus from '../../ui/Menus.jsx';
-import Empty from '../../ui/Empty';
+import Spinner from '../../ui/Spinner';
+import CabinRow from './CabinRow';
+import { useCabins } from './useCabins';
+import Table from '../../ui/Table';
+import Menus from '../../ui/Menus';
 import { useSearchParams } from 'react-router-dom';
+import Empty from '../../ui/Empty';
 
 function CabinTable() {
-  const { isLoading, cabins } = useFetchCabins();
+  const { isLoading, cabins } = useCabins();
   const [searchParams] = useSearchParams();
 
   if (isLoading) return <Spinner />;
@@ -17,18 +15,16 @@ function CabinTable() {
 
   // 1) FILTER
   const filterValue = searchParams.get('discount') || 'all';
-  // ruft die jeweiligen searchParams von "discount" in der URL ab; wenn nicht vorhanden, d.h. null, dann wird "all" gesetzt; das passiert beim Mounting der Komponenten, wenn noch kein Filter-Button gedrückt wurde
 
   let filteredCabins;
   if (filterValue === 'all') filteredCabins = cabins;
   if (filterValue === 'no-discount')
-    filteredCabins = cabins.filter((cabin) => cabin.disount === 0);
+    filteredCabins = cabins.filter((cabin) => cabin.discount === 0);
   if (filterValue === 'with-discount')
-    filteredCabins = cabins.filter((cabin) => cabin.disount > 0);
+    filteredCabins = cabins.filter((cabin) => cabin.discount > 0);
 
   // 2) SORT
   const sortBy = searchParams.get('sortBy') || 'startDate-asc';
-
   const [field, direction] = sortBy.split('-');
   const modifier = direction === 'asc' ? 1 : -1;
   const sortedCabins = filteredCabins.sort(
@@ -37,7 +33,7 @@ function CabinTable() {
 
   return (
     <Menus>
-      <Table colums="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
+      <Table columns="0.6fr 1.8fr 2.2fr 1fr 1fr 1fr">
         <Table.Header>
           <div></div>
           <div>Cabin</div>
@@ -46,6 +42,7 @@ function CabinTable() {
           <div>Discount</div>
           <div></div>
         </Table.Header>
+
         <Table.Body
           // data={cabins}
           // data={filteredCabins}
