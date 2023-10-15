@@ -23,7 +23,7 @@ export function useRecentStays() {
     (stay) => stay.status === 'checked-in' || stay.status === 'checked-out'
   );
 
-  return { isLoading, stays, confirmedStays };
+  return { isLoading, stays, confirmedStays, numDays };
 }
 
 // confirmedStays: der guest hat icht nur gebucht, sondern hat auch eingecheckt
