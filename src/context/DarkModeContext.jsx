@@ -1,11 +1,15 @@
 /* eslint-disable react/prop-types */
 import { createContext, useContext, useEffect } from 'react';
-import { useLocalStorageState } from '../hooks/useLocalStorageState.js';
+import { useLocalStorageState } from '../hooks/useLocalStorageState';
 
 const DarkModeContext = createContext();
 
 function DarkModeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useLocalStorageState(false, 'isDarkMode');
+  const [isDarkMode, setIsDarkMode] = useLocalStorageState(
+    // bewirkt dass der Mode (dark oder light) des OS als default verwendet wird
+    window.matchMedia('(prefers-color-scheme: dark)').matches,
+    'isDarkMode'
+  );
 
   useEffect(
     function () {
@@ -33,11 +37,8 @@ function DarkModeProvider({ children }) {
 
 function useDarkMode() {
   const context = useContext(DarkModeContext);
-
-  if (context === undefined) {
+  if (context === undefined)
     throw new Error('DarkModeContext was used outside of DarkModeProvider');
-  }
-
   return context;
 }
 
