@@ -22,7 +22,7 @@ function HeaderMenu() {
       </li>
 
       <li>
-        <DarkModeToggle />s
+        <DarkModeToggle />
       </li>
       <li>
         <Logout />
