@@ -15,6 +15,9 @@ function Dashboard() {
   // console.log(bookings)
   return (
     <>
+      <div>
+        👋 Data mutations (create, update, delete) are deactivated in this demo
+      </div>
       <Row type="horizontal">
         <Heading as="h1">Dashboard</Heading>
         <DashboardFilter />
