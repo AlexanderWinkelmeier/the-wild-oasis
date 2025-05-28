@@ -2,11 +2,12 @@
 
 export const guests = [
   {
-    fullName: 'Bruce Willis',
-    email: 'bruce.willis@hollywood.com',
-    nationality: 'United States of America',
-    nationalID: '1955032055',
-    countryFlag: 'https://flagcdn.com/us.svg',
+    // id: 1000,
+    fullName: 'Jonas Schmedtmann',
+    email: 'hello@jonas.io',
+    nationality: 'Portugal',
+    nationalID: '3525436345',
+    countryFlag: 'https://flagcdn.com/pt.svg',
   },
   {
     fullName: 'Jonathan Smith',
