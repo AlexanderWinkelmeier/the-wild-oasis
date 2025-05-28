@@ -2,9 +2,12 @@
 
 import { createClient } from '@supabase/supabase-js';
 
-export const supabaseUrl = 'https://npkbzmbbycmbbavnpptp.supabase.co';
-const supabaseKey =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wa2J6bWJieWNtYmJhdm5wcHRwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTMzMDIzNTIsImV4cCI6MjAwODg3ODM1Mn0.elzPs3uY9SMFKdTqA41W9TjJmMCJ5n6oy4DJrQf70JU';
+export const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
 const supabase = createClient(supabaseUrl, supabaseKey);
 
+// Named Export (für neue Imports)
+export { supabase };
+// Default Export (für Kompatibilität mit bestehenden Imports)
 export default supabase;
